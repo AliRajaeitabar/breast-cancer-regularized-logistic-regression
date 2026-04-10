@@ -1,7 +1,9 @@
-# breast-cancer-regularized-logistic-regression
-Breast cancer classification using logistic regression, Lasso, Ridge, and Elastic Net with focus on multicollinearity and false negative reduction.
+
 # Breast Cancer Classification using Regularized Logistic Regression
 
+## Key Result
+
+A Lasso logistic regression model achieved **97.6% recall** for malignant tumors while reducing false negatives to **1 case**, demonstrating strong performance for medical classification tasks where missed diagnoses are critical.
 ## Overview
 
 This project applies logistic regression and its regularized variants (Lasso, Ridge, and Elastic Net) to classify tumors as **malignant (M)** or **benign (B)** using the Breast Cancer Wisconsin (Diagnostic) dataset.
@@ -39,7 +41,7 @@ Test set distribution:
 - Verified no missing values
 - Removed duplicate rows
 - No manual standardization applied  
-  - (`glmnet` standardizes predictors internally)
+- (`glmnet` standardizes predictors internally)
 
 ---
 
@@ -107,11 +109,24 @@ Hyperparameters were selected using **cross-validation**.
 | Elastic Net  | 0.9946 |
 | Ridge        | 0.9943 |
 
-All models show **excellent discrimination**, with very similar performance.
-
 ![ROC Comparison](outputs/roc_comparison.png)
 
+The ROC curves for Lasso, Ridge, and Elastic Net almost completely overlap, indicating very similar classification performance across models.
+
+All models achieve near-perfect discrimination, with AUC values close to 1.0. The small differences between curves are negligible in practice, suggesting that model choice should be based on other factors such as interpretability and threshold behavior rather than AUC alone.
+
 ---
+## Model Selection
+Although all regularized models (Lasso, Ridge, and Elastic Net) achieved very similar performance (AUC ≈ 0.995), **Lasso was selected as the final model** for the following reasons:
+
+- **Highest AUC** (0.9953), although only marginally better than others  
+- **Built-in feature selection**, producing a sparse and more interpretable model  
+- **Effective threshold tuning**, allowing significant reduction in false negatives  
+- Strong overall balance between sensitivity and specificity  
+
+While Ridge achieved slightly fewer false negatives at the default threshold (0.5), Lasso provided greater flexibility for threshold adjustment and interpretability.
+
+Therefore, Lasso was chosen as the most practical and effective model for this classification task.
 
 ## Threshold Optimization (Lasso)
 
@@ -160,7 +175,7 @@ Lasso performs **feature selection** by shrinking some coefficients to zero.
   - `fractal_dimension_mean`
   - `fractal_dimension_se`
 
-These variables contribute most to distinguishing malignant from benign tumors.
+Positive coefficients increase the likelihood of a tumor being classified as malignant, while negative coefficients decrease this likelihood.
 
 ---
 
@@ -186,6 +201,15 @@ By adjusting the classification threshold:
 - Elastic Net mixing parameter (α) was not tuned
 - No external validation dataset
 - Model calibration was not evaluated
+
+---
+
+## Future Improvements
+
+- Tune Elastic Net mixing parameter (α)
+- Perform repeated cross-validation for more robust evaluation
+- Evaluate model calibration
+- Test on external datasets
 
 ---
 
