@@ -185,9 +185,9 @@ Positive coefficients increase the likelihood of a tumor being classified as mal
 - Regularized models (Lasso, Ridge, Elastic Net) all performed **extremely well**
 - Performance differences between models were **minimal (AUC ~0.995)**
 - **Lasso was selected** because:
-- highest AUC (slightly)
-- built-in feature selection
-- effective threshold tuning
+  -   highest AUC (slightly)
+  -   built-in feature selection
+  -   effective threshold tuning
 
 By adjusting the classification threshold:
 - false negatives were minimized (**critical in cancer detection**)
